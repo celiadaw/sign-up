@@ -1,6 +1,6 @@
 const {Schema, model}= require('mongoose')
 const LoginSchema = new Schema({
-        email: { 
+        email:{ 
                 type: String
 
         },
