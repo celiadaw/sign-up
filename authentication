@@ -1,0 +1,62 @@
+PREREQUISITOS: NADA DE FRONT (PETICIONES CON POSTMAN)
+--STORY USER 1: Sign-UP (básico)
+        JWT Y (OAUth)--> 1 sin jwt ni oauth -... lueg 
+        -->hacer el primer registro de login con JWT
+        (empezar con algo hecho .. )
+--(ux me dice que hay que hacer un form de registro y me pongo )
+        (user, password y boton de envío, es lo que tienes de ux)
+step 1:
+REQUEST: Enviar user(con email) Y pass por POST
+    postman me manden un post... con un key que sea user
+    y key pass+
+
+ -----------------ante una misma petición tenemos diferentes responses   
+RESPONSE: 
+        CASOS:
+        step 1 
+            REQUEST (POST): {EMAIL:"..", PASS:".."}
+            pass hasear con md5 o lo que sea
+            enviar email y pass por post
+                step 1 ok (lo he creado)
+                //compruebo si existe: READ BD: si existe email
+                AÑADIR en la BD ...create bd
+                response: {result:0}
+
+                step 2.ko (no lo he creado porque 
+                ya existia)
+                response: {result : "1"}
+                -->podría haber mas cosas en response...() response: {result : "1", suggest:".."})
+                            
+
+yotear datos en front antes de enviarlos a back
+en back desyotear los datos
+(recordatorio hay paquetes de encoding y decoding jwts)
+jtw-encode
+jtw-decode
+jtw-express
+md5 npm  es un hasing que encripta una clave!
+
+
+secuence algoritms hasings--- buscar los diferentes!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            step 1.1. -->usuario no existia y lo he creado ahora mismo
+                    step 1.1.ok. RESPONSE: usuario creado!(exitosamente)
+                                response{result :ok/0}--> usuario nuevo creado
+
+                          step 1.1.ko       RESPONSE: usuario no existia pero no lo he podido ccrear!()
+                                response{result :1-10}--> usuario no creado(validacion, falta algo , bd caida... etc etc)
+                                (porque )
+            step 1.2 -->el usuario no esta en la bd
