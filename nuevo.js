@@ -55,11 +55,12 @@ server.post('/signup',  (req, res) => {
 })
 
 function hashEqual(password, user) {
-     
+     console.log("user en hashequal"+ user)
     bcrypt.compare(password, user.password, function (err, isMatch) {
         if (err) throw err;
         console.log('comparación de password es :', isMatch);
         if (isMatch) {
+            console.log("user en hashequal"+ user)
             return user;
         }else{
             res.status(400).send("Contraseña erronea")
@@ -67,38 +68,65 @@ function hashEqual(password, user) {
     });
 
 }
+// function createToken(user){
+//     let token= jwt.sign({user}, "secretKey", (err,token)=>
+//     console.log(token + " este es el token")
+//    res.json({
+   
+//         ok: true,
+//         user,
+//         token
+//     });
+   
 
-
-server.post('/singin', (req, res) => {
+// });
+// });
+function userExist (user){
     
+    if (!user) {
+      res.status(404).send("no existe..");
+    } else {
+        res.status(200).send("existe.." + user);
+        return user
+    }
+}
+server.post('/singin', (req, res) => {
+    let token;
     email = req.body.email
    password = req.body.password
-    let seed="secreto"//debe ir en .env
+   
     Login.findOne({ email })
-        .then(user => {
+        .then(user =>  {
             if (!user) {
                 res.status(404).send("no existe..");
-            } else {
-                res.status(200).send("existe.." + user);
-                return user
-            }
-        })
+              } else {
+                
+                  return user
+              }
+        } )
         .then(user => hashEqual(password, user))
-        .then (user=>{
-            // let token= jwt.sign({
-            //     user,
-            // }, seed);
+        //no funciona createToken
+        .then (user=>{   token=jwt.sign({ user }, "secretKey", (err,token)=>{
+            if(err) res.status(400).send("error al crear secret")
+            console.log(token + " este es el token")
+      
+            return res.json({
+       
+                ok: true,
+                user,
+                token
+            });
 
-            // res.json({
-            //     ok: true,
-            //     user,
-            //     token
-            // });
+        });
+       
+        
+         
         })
         .catch(err => {
             // hubo un error
             res.status(500).send({ err });
         })
+       
 
 })
     // //1) comprobar si email existe en la bd 
@@ -109,5 +137,15 @@ server.post('/singin', (req, res) => {
     //  * ---->añadir un response con codigo 200??
     //  *   ----> si no existe decir que el password esta mal( error enviar respuesta con codigo -- 404????)
     //  * 
-    //  * 
-    //  *  * /             
+    //  * //deberiamos añadir el secreto al localhost/sessionhost
+    //  *  * /    
+    
+    server.post("/signout", (req,res)=>{
+
+        //1)se desloguea al pedirlo
+        //2)le echamos
+
+        
+
+
+    })
